@@ -2,7 +2,7 @@
 # Sistema de matriculas
 
 ### Histórias de Usuário
-**Secretária** :
+**Secretária:**
 * **Como** secretária acadêmica **quero** ser capaz de gerar o currículo **para que** seja possível gerenciar as disciplinas pertencentes a cada semestre.
 * **Como** secretária acadêmica **quero** ser capaz de administrar as turmas com determinada quantidade de alunos para garantir que as salas suportem todos os alunos.
 * **Como** secretária acadêmica **quero** ser capaz de organizar a grade de aula para os professores **para que** não tenha conflito de horários.
@@ -12,7 +12,7 @@
 * **Como** secretária acadêmica **quero** ser capaz de vincular disciplinas aos cursos **para que** no ato da matrícula apareçam todas as disciplinas ofertadas pelo curso.
 
   
-**Professor(a)**
+**Professor**
 * **Como** professor **quero** ser capaz de acessar o sistema **para que** eu possa ter acesso às informações disponibilizadas no sistema.
 * **Como** professor **quero** ser capaz de visualizar as informações das disciplinas que leciono **para que** consiga ter um controle dos alunos que estão matriculados nela.
 * **Como** professor **quero** ser capaz de visualizar minha grade de horários no sistema **para que** eu possa organizar minhas aulas.
