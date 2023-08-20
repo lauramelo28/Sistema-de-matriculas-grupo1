@@ -1,5 +1,5 @@
 # LDS-LAB01
-# Sistema-de-matriculas
+# Sistema de matriculas
 
 ### Histórias de Usuário
 **Secretária** :
