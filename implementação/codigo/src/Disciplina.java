@@ -2,10 +2,11 @@ import java.util.List;
 
 public class Disciplina {
     //#region ATRIBUTOS
-    private String nomeDisciplina;
+    private String nome;
     private boolean ativa;
     private List<Aluno> alunosMatriculadas;
     private boolean periodoDeInscricaoLiberado;
+    private Curso curso;
 
     private static final int MIN_DE_ALUNOS = 3;
     private static final int MAX_DE_ALUNOS = 60;

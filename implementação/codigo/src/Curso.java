@@ -2,7 +2,7 @@ import java.util.List;
 
 public class Curso {
     //#region ATRIBUTOS
-    private String nomeCurso;
+    private String nome;
     private int numeroDeCreditos;
     private List<Disciplina> disciplinas;
     //#endregion
