@@ -13,6 +13,7 @@ public class Aluno extends Usuario {
     public int gerenciarCreditos(){
         //Implementação do método
         return 0;
+        
     }
 
     public void matricularNoCurso(String nomeCurso){
