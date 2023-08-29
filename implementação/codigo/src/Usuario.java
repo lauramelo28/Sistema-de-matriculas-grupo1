@@ -1,10 +1,10 @@
 public abstract class Usuario {
     //#region ATRIBUTOS
-    private String nome;
-    private String cpf;
-    private String dataNascimento;
-    private String login;
-    private String senha;
+    protected String nome;
+    protected String cpf;
+    protected String dataNascimento;
+    protected String login;
+    protected String senha;
     //#endregion
 
     //#region MÉTODOS
