@@ -1,6 +1,11 @@
 import java.util.List;
 
 public class Aluno extends Usuario {
+
+    public Aluno(String nome, String cpf, String dataNascimento, String login, String senha) {
+        super(nome, cpf, dataNascimento, login, senha);
+    }
+
     //#region ATRIBUTOS
     private String matricula;
     private String nomeCurso;

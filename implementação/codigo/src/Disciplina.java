@@ -48,6 +48,7 @@ public class Disciplina {
         for(Aluno aluno: alunosMatriculados){
            alunosListados += aluno.getNome() + "\n" + aluno.getMatricula() + "\n";
         }
+        return alunosListados;
     }
 
     public void inscricaoLiberada(boolean liberarInscricao){
