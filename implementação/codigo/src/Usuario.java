@@ -5,24 +5,23 @@ public abstract class Usuario {
     protected String dataNascimento;
     protected String login;
     protected String senha;
-    private Usuario user;
-
-
+    private boolean logado;
     //#endregion
 
     //#region MÉTODOS
-
     public Usuario(String nome, String cpf, String dataNascimento, String login, String senha){
         this.nome = nome;
         this.cpf = cpf;
         this.dataNascimento = dataNascimento;
         this.login = login; 
         this.senha = senha;
+        this.logado = false;
     }
 
     public String getNome(){
         return this.nome;
     }
+
     public String getCpf(){
         return this.cpf;
     }
@@ -39,20 +38,22 @@ public abstract class Usuario {
         return this.senha;
     }
     
-    /*
-    public void realizarLogin(String login, String senha){
-        Usuario usuarioAtual = user.get(login);
-        
-        if(user !=null && usuarioAtual.getSenha().equals(senha)){
-            this.usuarioAtual = aluno;
-        } else{
-            this.usuarioAtual = null;
+    public boolean realizarLogin(String loginDigitado, String senhaDigitada) {
+        if (this.login.equals(loginDigitado) && this.senha.equals(senhaDigitada)) {
+            this.logado = true;
+            return true;
+        } else {
+            return false;
         }
-
-    }*/
-
-    public void realizarLogoff(){
-      //  this.usuarioAtual = null;
     }
-    //#endregion
+
+    public void realizarLogoff() {
+        if (logado) {
+            this.logado = false;
+        } 
+    }
+
+    public boolean EstaLogado() {
+        return logado;
+    }
 }
