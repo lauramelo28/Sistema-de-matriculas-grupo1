@@ -5,11 +5,11 @@ public abstract class Usuario {
     protected String dataNascimento;
     protected String login;
     protected String senha;
-    private boolean logado;
+    protected boolean logado;
     //#endregion
 
     //#region MÉTODOS
-    public Usuario(String nome, String cpf, String dataNascimento, String login, String senha){
+    public Usuario(String nome, String cpf, String dataNascimento, String login, String senha, boolean estaLogado) {
         this.nome = nome;
         this.cpf = cpf;
         this.dataNascimento = dataNascimento;

@@ -2,16 +2,18 @@ import java.util.List;
 
 public class Aluno extends Usuario {
 
-    public Aluno(String nome, String cpf, String dataNascimento, String login, String senha) {
-        super(nome, cpf, dataNascimento, login, senha);
-    }
-
     //#region ATRIBUTOS
     private String matricula;
     private String nomeCurso;
     private List<Disciplina> disciplinasMatriculadas;
 
     private static final int MAX_DE_DISCIPLINAS = 4;
+
+    public Aluno(String nome, String cpf, String dataNascimento, String login, String senha, boolean estaLogado) {
+        super(nome, cpf, dataNascimento, login, senha, estaLogado);
+        this.matricula = matricula;
+        this.nomeCurso = nomeCurso;
+    }
     //#endregion
 
     public String getNome(){
@@ -34,10 +36,12 @@ public class Aluno extends Usuario {
     }
 
     public void matricularNaDisciplina(Disciplina disciplina){
-        this.disciplinasMatriculadas.add(disciplina);
+        if (verificarQtdDisciplinas()){
+            this.disciplinasMatriculadas.add(disciplina);
+        }
     }
 
-    public void cancelarMatricula(Disciplina disciplina){
+    public void cancelarDisciplina(Disciplina disciplina){
         this.disciplinasMatriculadas.remove(disciplina);
     }
 
@@ -45,13 +49,37 @@ public class Aluno extends Usuario {
         return this.disciplinasMatriculadas;
     }
 
-    public void realizarLogin(){
-        //Implementação do método
+    public boolean verificarQtdDisciplinas(){
+        if (this.disciplinasMatriculadas.size() < MAX_DE_DISCIPLINAS) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
-    public void realizarLogoff(){
-        //Implementação do método
+
+    @Override
+    public boolean realizarLogin(String loginDigitado, String senhaDigitada) {
+        if (this.login.equals(loginDigitado) && this.senha.equals(senhaDigitada)) {
+            this.logado = true;
+            return true;
+        } else {
+            return false;
+        }
     }
+
+    @Override
+    public void realizarLogoff() {
+        if (logado) {
+            this.logado = false;
+        } 
+    }
+
+    @Override
+    public boolean EstaLogado() {
+        return logado;
+    }
+
     //#endregion
 }
 
