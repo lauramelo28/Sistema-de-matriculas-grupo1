@@ -5,17 +5,15 @@ public abstract class Usuario {
     protected String dataNascimento;
     protected String login;
     protected String senha;
-    protected boolean logado;
     //#endregion
 
     //#region MÉTODOS
-    public Usuario(String nome, String cpf, String dataNascimento, String login, String senha, boolean estaLogado) {
+    public Usuario(String nome, String cpf, String dataNascimento, String login, String senha) {
         this.nome = nome;
         this.cpf = cpf;
         this.dataNascimento = dataNascimento;
         this.login = login; 
         this.senha = senha;
-        this.logado = false;
     }
 
     public String getNome(){
@@ -36,24 +34,5 @@ public abstract class Usuario {
 
     public String getSenha() {
         return this.senha;
-    }
-    
-    public boolean realizarLogin(String loginDigitado, String senhaDigitada) {
-        if (this.login.equals(loginDigitado) && this.senha.equals(senhaDigitada)) {
-            this.logado = true;
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    public void realizarLogoff() {
-        if (logado) {
-            this.logado = false;
-        } 
-    }
-
-    public boolean EstaLogado() {
-        return logado;
     }
 }
