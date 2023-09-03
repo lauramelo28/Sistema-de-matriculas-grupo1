@@ -7,7 +7,7 @@ import java.util.Scanner;
 public class Universidade {
     // #region ATRIBUTOS
     private String nome;
-    private List<Usuario> usuarios;
+    private LinkedList<Usuario> usuarios;
     private Usuario usuarioLogado;
 
     private static final int MAX_DE_DISCIPLINAS = 4;
@@ -43,6 +43,7 @@ public class Universidade {
                 linha = entrada.nextLine();
             }
             entrada.close();
+            processarUsuarios(listaUsuarios);
         } catch (FileNotFoundException e) {
             throw new FileNotFoundException("Arquivo de usuarios nao encontrado");
         }
@@ -74,16 +75,26 @@ public class Universidade {
     }
 
     private void adicionarAluno(String nome, String cpf, String dataNascimento, String login, String senha, String matricula, String curso){
+        if(usuarios == null){
+            usuarios = new LinkedList<Usuario>();
+        }
+
         Aluno aluno = new Aluno(nome, cpf, dataNascimento, login, senha, matricula, curso);
         this.usuarios.add(aluno);
     }
 
     private void adicionarProfessor(String nome, String cpf, String dataNascimento, String login, String senha, String curso){
+        if(usuarios == null){
+            usuarios = new LinkedList<Usuario>();
+        }
         Professor professor = new Professor(nome, cpf, dataNascimento, login, senha, curso);
         this.usuarios.add(professor);
     }
 
     public void adicionarSecretaria(String nome, String cpf, String dataNascimento, String login, String senha){
+        if(usuarios == null){
+            usuarios = new LinkedList<Usuario>();
+        }        
         Secretaria secretaria = new Secretaria(nome, cpf, dataNascimento, login, senha);
         this.usuarios.add(secretaria);
     }

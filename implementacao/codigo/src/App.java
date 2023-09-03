@@ -6,6 +6,9 @@ import java.util.Scanner;
 public class App {
     static Scanner teclado = new Scanner(System.in);
     static Universidade universidade = new Universidade("Puc Minas");
+    static Aluno alunoLogado;
+    static Professor professorLogado;
+    static Secretaria secretariaLogada;
 
     public static void main(String[] args) {
         int opcao;
@@ -20,10 +23,13 @@ public class App {
             limparTela();
             switch (opcao) {
                 case 1:
-                    realizarLogin();
+                    logarComoAluno();
                     break;
                 case 2:
-                    realizarCadastro();
+                    logarComoProfessor();
+                    break;
+                case 3:
+                    logarComoSecretaria();
                     break;
                 default:
                     break;
@@ -37,11 +43,12 @@ public class App {
     public static int menuUniversidade() {
         limparTela();
         System.out.println("Menu Sistema de Matriculas");
-        System.out.println("=================================================");
-        System.out.println("| 1 - Realizar login                            |");
-        System.out.println("| 2 - Realizar logoff                           |");
-        System.out.println("| 0 - Sair                                      |");
-        System.out.println("=================================================");
+        System.out.println("===================================================");
+        System.out.println("| 1 - Area do aluno                               |");
+        System.out.println("| 2 - Area do professor                           |");
+        System.out.println("| 3 - Area da secretaria                           |");
+        System.out.println("| 0 - Sair                                        |");
+        System.out.println("===================================================");
         System.out.print("\nDigite sua opção: ");
         int opcao = Integer.parseInt(teclado.nextLine());
 
@@ -101,18 +108,71 @@ public class App {
         senha = teclado.nextLine();
     }
 
-    // Metodo para realizar o login de um cliente na plataforma
-    public static void realizarLogin() {
-        System.out.println("==========================");
-        System.out.println("--Realizando login--");
+    // Metodo para realizar o login de um aluno
+    public static void logarComoAluno() {
+        System.out.println("============ALUNO============");
+        System.out.println("------ Realize o login ------");
 
-        System.out.println("Digite seu login: ");
+        System.out.print("Digite seu nome de usuario: ");
         String login = teclado.nextLine();
-        
-        System.out.println("Digite sua senha: ");
+
+        System.out.print("Digite sua senha: ");
         String senha = teclado.nextLine();
 
-        universidade.realizarLogin(login, senha);
+        try{
+            alunoLogado = (Aluno)universidade.realizarLogin(login, senha);
+            
+            if(alunoLogado == null){
+                System.out.println("Login ou senha invalidos, tente logar novamente");
+            }            
+        }catch(ClassCastException e){
+            System.out.println("Erro ao fazer cadastro como aluno, tente novamente");
+        }
+
+
+    }
+    // Metodo para realizar o login de um professor
+    public static void logarComoProfessor() {
+        System.out.println("============PROFESSOR============");
+        System.out.println("-------- Realize o login --------");
+
+        System.out.print("Digite seu nome de usuario: ");
+        String login = teclado.nextLine();
+
+        System.out.print("Digite sua senha: ");
+        String senha = teclado.nextLine();
+
+        try{
+            professorLogado = (Professor)universidade.realizarLogin(login, senha);
+
+            if(professorLogado == null){
+                System.out.println("Login ou senha invalidos, tente logar novamente");
+            }
+        }catch(ClassCastException e){
+            System.out.println("Erro ao fazer cadastro como professor, tente novamente");
+        }
+    }
+
+    // Metodo para realizar o login de um aluno
+    public static void logarComoSecretaria() {
+        System.out.println("============SECRETARIA============");
+        System.out.println("-------- Realize o login ---------");
+
+        System.out.print("Digite seu nome de usuario: ");
+        String login = teclado.nextLine();
+
+        System.out.print("Digite sua senha: ");
+        String senha = teclado.nextLine();
+
+        try{
+            secretariaLogada = (Secretaria)universidade.realizarLogin(login, senha);
+            
+            if(secretariaLogada == null){
+                System.out.println("Login ou senha invalidos, tente logar novamente");
+            }            
+        }catch(ClassCastException e){
+            System.out.println("Erro ao fazer cadastro como secretaria, tente novamente");
+        }
     }
 
     // Metodo para realizar o logoff de um cliente na plataforma
