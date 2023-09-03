@@ -2,6 +2,11 @@ import java.util.List;
 
 public class Secretaria extends Usuario {
 
+    private List<Curso> cursos;
+    private List<Aluno> alunos;
+    private List<Professor> professores;
+
+
     public Secretaria (String nome, String cpf, String dataNascimento, String login, String senha, boolean estaLogado) {
         super(nome, cpf, dataNascimento, login, senha, estaLogado);
     }
@@ -9,25 +14,34 @@ public class Secretaria extends Usuario {
 
 
     //#region MÉTODOS
-    public List<String> gerarCurriculo(Curso curso){
-        //Implementação do método
+    public String gerarCurriculo(Curso curso1, int semestre){
+        for(Curso curso : cursos){
+            if(curso.getNome().equals(curso1.getNome())){
+                return curso.gerarCurriculoSemestre(semestre);
+            }
+        }
         return null;
     }
 
     public void cadastrarDisciplina(Disciplina disciplina){
-        //Implementação do método
+        Disciplina discplinaNova = new Disciplina(disciplina.getNome(), disciplina.getNumeroDeCreditos(), disciplina.getCurso(), disciplina.getSemestre(), disciplina.getTipoDisciplina());
+        for(Curso curso : cursos){
+            if(curso.getNome().equals(disciplina.getCurso().getNome())){
+                curso.adicionarDisciplinas(discplinaNova);
+            }
+        }
     }
 
     public void cadastrarCurso(Curso curso){
-        //Implementação do método
+        cursos.add(curso);        
     }
 
     public void cadastrarProfessor(Professor professor){
-        //Implementação do método
+        professores.add(professor);
     }
 
     public void cadastrarAluno(Aluno aluno){
-        //Implementação do método
+        alunos.add(aluno);
     }
 
     public double gerarCobrancaFinanceira(String nomeAluno){
@@ -47,8 +61,16 @@ public class Secretaria extends Usuario {
         //Implementação do método
     }
 
-    public void liberarPeriodoMatricula(String nomeDisciplina){
-        //Implementação do método
+    public void liberarPeriodoMatricula(String nomeDisciplina, String nomeCurso){
+        for(Curso curso : cursos){
+            if(curso.getNome().equals(nomeCurso)){
+                for(Disciplina disciplina : curso.getDisciplinas()){
+                    if(disciplina.getNome().equals(nomeDisciplina)){
+                        disciplina.inscricaoLiberada(true);
+                    }
+                }
+            }
+        }
     }
 
     

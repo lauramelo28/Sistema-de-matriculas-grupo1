@@ -9,19 +9,41 @@ public class Disciplina {
     private boolean periodoDeInscricaoLiberado; 
     private Curso curso;
     private int numeroDeCreditos;
+    private int semestre;
     private static final int MIN_DE_ALUNOS = 3;
     private static final int MAX_DE_ALUNOS = 60;
+    private TipoDisciplina TipoDisciplina;
     //#endregion
 
     //#region CONSTRUTORES
-    public Disciplina(String nome, int numeroDeCreditos, Curso curso){
+    public Disciplina(String nome, int numeroDeCreditos, Curso curso, int semestre, TipoDisciplina tipoDisciplina){
         this.nome = nome;
         this.numeroDeCreditos = numeroDeCreditos;
         this.curso = curso;
+        this.semestre = semestre;
+        this.TipoDisciplina = tipoDisciplina;
     }
     //#region MÉTODOS
     public String getNome(){
         return this.nome;
+    }
+    public boolean getAtiva(){
+        return this.ativa;
+    }
+    public List<Aluno> getAlunosMatriculados(){
+        return this.alunosMatriculados;
+    }
+    public Professor getProfessor(){
+        return this.professor;
+    }
+    public Curso getCurso(){
+        return this.curso;
+    }
+    public int getSemestre(){
+        return this.semestre;
+    }
+    public TipoDisciplina getTipoDisciplina(){
+        return this.TipoDisciplina;
     }
     public int getNumeroDeCreditos(){
         return this.numeroDeCreditos;

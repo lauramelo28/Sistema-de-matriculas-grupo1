@@ -18,6 +18,9 @@ public class Curso {
     public String getNome() {
         return nome;
     }
+    public List<Disciplina> getDisciplinas() {
+        return disciplinas;
+    }
 
     /**
      * Método para listar as disciplinas do curso
@@ -26,7 +29,7 @@ public class Curso {
     public String listarDisciplinas() {
         String disciplinasListada = "";
         for(Disciplina disciplina : disciplinas){
-            disciplinasListada += disciplina.getNome() + "\n" + disciplina.getNumeroDeCreditos() + "\n";
+            disciplinasListada += disciplina.getNome() + "\n" + disciplina.getTipoDisciplina() + "\n";
         }
         return disciplinasListada;
     }
@@ -38,7 +41,15 @@ public class Curso {
     public void adicionarDisciplinas(Disciplina disciplina){
         this.disciplinas.add(disciplina);
     }
-
+    public String gerarCurriculoSemestre(int semestre){
+        String curriculo = "";
+        for(Disciplina disciplina : disciplinas){
+            if(disciplina.getSemestre() == semestre){
+                curriculo += disciplina.getNome() + "\n";
+            }
+        }
+        return curriculo;
+    }
     /**
      * Método para listar os alunos do curso
      * @return String com os alunos do curso
