@@ -7,12 +7,10 @@ public class Secretaria extends Usuario {
     private List<Professor> professores;
 
 
-    public Secretaria (String nome, String cpf, String dataNascimento, String login, String senha, boolean estaLogado) {
-        super(nome, cpf, dataNascimento, login, senha, estaLogado);
+    public Secretaria (String nome, String cpf, String dataNascimento, String login, String senha) {
+        super(nome, cpf, dataNascimento, login, senha);
     }
-
-
-
+    
     //#region MÉTODOS
     public String gerarCurriculo(Curso curso1, int semestre){
         for(Curso curso : cursos){
@@ -71,29 +69,6 @@ public class Secretaria extends Usuario {
                 }
             }
         }
-    }
-
-    
-    @Override
-    public boolean realizarLogin(String loginDigitado, String senhaDigitada) {
-        if (this.login.equals(loginDigitado) && this.senha.equals(senhaDigitada)) {
-            this.logado = true;
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    @Override
-    public void realizarLogoff() {
-        if (logado) {
-            this.logado = false;
-        } 
-    }
-
-    @Override
-    public boolean EstaLogado() {
-        return logado;
     }
     
     //#endregion

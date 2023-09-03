@@ -9,15 +9,15 @@ public class Aluno extends Usuario {
 
     private static final int MAX_DE_DISCIPLINAS = 4;
 
-    public Aluno(String nome, String cpf, String dataNascimento, String login, String senha, boolean estaLogado) {
-        super(nome, cpf, dataNascimento, login, senha, estaLogado);
+    public Aluno(String nome, String cpf, String dataNascimento, String login, String senha, String matricula, String nomeCurso) {
+        super(nome, cpf, dataNascimento, login, senha);
         this.matricula = matricula;
         this.nomeCurso = nomeCurso;
     }
     //#endregion
 
-    public String getNome(){
-        return super.nome;
+    public String getLogin(){
+        return this.login;
     }
 
     public String getMatricula(){
@@ -55,29 +55,6 @@ public class Aluno extends Usuario {
         } else {
             return false;
         }
-    }
-
-
-    @Override
-    public boolean realizarLogin(String loginDigitado, String senhaDigitada) {
-        if (this.login.equals(loginDigitado) && this.senha.equals(senhaDigitada)) {
-            this.logado = true;
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    @Override
-    public void realizarLogoff() {
-        if (logado) {
-            this.logado = false;
-        } 
-    }
-
-    @Override
-    public boolean EstaLogado() {
-        return logado;
     }
 
     //#endregion
