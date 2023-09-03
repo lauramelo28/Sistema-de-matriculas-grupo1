@@ -49,7 +49,8 @@ public class App {
     private static void menuAluno() {
         System.out.println("Menu App Aluno" );
         System.out.println("=================================================");
-
+        System.out.println("1 - Realizar matricula em discplina");
+        System.out.println("2 - Cancelar matricula em discplina");
         System.out.println("=================================================");
 
     }
@@ -57,7 +58,8 @@ public class App {
     private static void menuSecretaria() {
         System.out.println("Menu App Secretaria" );
         System.out.println("=================================================");
-
+        System.out.println("1 - Gerar currículo do semestre");
+        System.out.println("2 - Cancelar matricula em discplina");
         System.out.println("=================================================");
    
     }
