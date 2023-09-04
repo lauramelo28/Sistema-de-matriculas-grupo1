@@ -51,16 +51,12 @@ public class Secretaria extends Usuario {
      * @return valor double
      */
     public double gerarCobrancaFinanceira(String nomeAluno){
-        List<Disciplina> disciplinasAluno = null;
         double valor = 0.0;
 
        for(Aluno aluno : alunos){
            if(aluno.getNome().equals(nomeAluno)){
-                disciplinasAluno = aluno.listarDisciplinas();
+                valor = aluno.cobranca();
            }
-        }
-        for(int i = 0; i <= disciplinasAluno.size(); i++){
-            valor = disciplinasAluno.get(i).getNumeroDeCreditos() * 100;
         }
 
         return valor;

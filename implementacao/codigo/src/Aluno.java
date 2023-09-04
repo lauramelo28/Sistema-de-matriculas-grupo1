@@ -35,11 +35,6 @@ public class Aluno extends Usuario {
     }
 
     //#region MÉTODOS
-    public int gerenciarCreditos(){
-        //Implementação do método
-        return 0;
-        
-    }
 
     public double cobranca(){
         int valorSemestre = 0;
