@@ -1,3 +1,4 @@
+import java.util.LinkedList;
 import java.util.List;
 
 public class Aluno extends Usuario {
@@ -7,11 +8,13 @@ public class Aluno extends Usuario {
     private String nomeCurso;
     private List<Disciplina> disciplinasMatriculadas;
 
-    private static final int MAX_DE_DISCIPLINAS = 4;
+    private static final int MAX_DE_DISCIPLINAS_OBRIGATORIAS = 4;
+    private static final int MAX_DE_DISCIPLINAS_OPTATIVAS = 2;
 
     public Aluno(String nome, String cpf, String dataNascimento, String login, String senha, String matricula, String nomeCurso) {
         super(nome, cpf, dataNascimento, login, senha);
         this.matricula = matricula;
+        this.disciplinasMatriculadas = new LinkedList<Disciplina>();
         this.nomeCurso = nomeCurso;
     }
     //#endregion
@@ -24,6 +27,10 @@ public class Aluno extends Usuario {
         return this.matricula;
     }
 
+    public String getNomeCurso(){
+        return this.nomeCurso;
+    }
+
     //#region MÉTODOS
     public int gerenciarCreditos(){
         //Implementação do método
@@ -31,33 +38,46 @@ public class Aluno extends Usuario {
         
     }
 
-    public void matricularNoCurso(String nomeCurso){
-        //Implementação do método
-    }
-
-    public void matricularNaDisciplina(Disciplina disciplina){
-        if (verificarQtdDisciplinas()){
-            this.disciplinasMatriculadas.add(disciplina);
-        }
+    public void matricularNaDisciplina(Disciplina disciplina)throws IllegalArgumentException{
+        verificarQtdDisciplinas();
+        this.disciplinasMatriculadas.add(disciplina);
     }
 
     public void cancelarDisciplina(Disciplina disciplina){
         this.disciplinasMatriculadas.remove(disciplina);
     }
 
+    public String toStringDisciplinasMatriculadas(){
+        String disciplinasToString = "";
+        for(Disciplina disciplina : disciplinasMatriculadas){
+            disciplinasToString += disciplina.toString() + "\n";
+        }
+
+        return disciplinasToString;
+    }
+
     public List<Disciplina> listarDisciplinas(){
         return this.disciplinasMatriculadas;
     }
 
-    public boolean verificarQtdDisciplinas(){
-        if (this.disciplinasMatriculadas.size() < MAX_DE_DISCIPLINAS) {
-            return true;
-        } else {
-            return false;
+    private void verificarQtdDisciplinas() throws IllegalArgumentException{
+        int qtdDisciplinasObrigatorias = 0;
+        int qtdDisciplinasOptativas = 0;
+
+        for(Disciplina disciplina : disciplinasMatriculadas){
+            if(disciplina.getTipoDisciplina().equals("Obrigatoria"))
+                qtdDisciplinasObrigatorias++;
+            else if(disciplina.getTipoDisciplina().equals("Optativa"))
+                qtdDisciplinasOptativas++;
+        }
+
+        if (qtdDisciplinasObrigatorias == MAX_DE_DISCIPLINAS_OBRIGATORIAS) {
+            throw new IllegalArgumentException("Voce nao pode ser matricular em mais de 4 disciplinas obrigatorias");
+        } else if (qtdDisciplinasOptativas == MAX_DE_DISCIPLINAS_OPTATIVAS) {
+            throw new IllegalArgumentException("Voce nao pode ser matricular em mais de 2 disciplinas optativas");
         }
     }
 
-    @Override
     public String toString(){
         return "Aluno;" + this.nome + ";" + this.cpf + ";" + this.dataNascimento + ";" + this.login + ";" + this.senha + ";" + this.matricula + ";" + this.nomeCurso;
     }

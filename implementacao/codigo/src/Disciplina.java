@@ -1,3 +1,4 @@
+import java.util.LinkedList;
 import java.util.List;
 
 public class Disciplina {
@@ -6,22 +7,23 @@ public class Disciplina {
     private boolean ativa;
     private List<Aluno> alunosMatriculados;
     private Professor professor;
-    private boolean periodoDeInscricaoLiberado; 
+    private boolean periodoDeInscricaoLiberado = true; 
     private Curso curso;
     private int numeroDeCreditos;
     private int semestre;
     private static final int MIN_DE_ALUNOS = 3;
     private static final int MAX_DE_ALUNOS = 60;
-    private TipoDisciplina TipoDisciplina;
+    private String tipoDisciplina;
     //#endregion
 
     //#region CONSTRUTORES
-    public Disciplina(String nome, int numeroDeCreditos, Curso curso, int semestre, TipoDisciplina tipoDisciplina){
+    public Disciplina(String nome, int numeroDeCreditos, Curso curso, int semestre, String tipoDisciplina){
         this.nome = nome;
         this.numeroDeCreditos = numeroDeCreditos;
         this.curso = curso;
         this.semestre = semestre;
-        this.TipoDisciplina = tipoDisciplina;
+        this.tipoDisciplina = tipoDisciplina;
+        this.alunosMatriculados = new LinkedList<Aluno>();
     }
     //#region MÉTODOS
     public String getNome(){
@@ -42,12 +44,13 @@ public class Disciplina {
     public int getSemestre(){
         return this.semestre;
     }
-    public TipoDisciplina getTipoDisciplina(){
-        return this.TipoDisciplina;
+    public String getTipoDisciplina(){
+        return this.tipoDisciplina;
     }
     public int getNumeroDeCreditos(){
         return this.numeroDeCreditos;
     }
+
     public boolean adicionarAluno(Aluno aluno){
         if(disciplinaDisponivel()){
             this.alunosMatriculados.add(aluno);
@@ -77,14 +80,18 @@ public class Disciplina {
         this.periodoDeInscricaoLiberado = liberarInscricao;
     }
 
-    private boolean disciplinaDisponivel(){
-        if(this.alunosMatriculados.size() > MIN_DE_ALUNOS && this.alunosMatriculados.size() < MAX_DE_ALUNOS && periodoDeInscricaoLiberado){
+    public boolean disciplinaDisponivel(){
+        if((this.alunosMatriculados.size() > MIN_DE_ALUNOS && this.alunosMatriculados.size() < MAX_DE_ALUNOS && !periodoDeInscricaoLiberado) || periodoDeInscricaoLiberado){
             this.ativa = true;
             return true;
         }else{
             this.ativa = false;
             return false;
         }
-    }    
+    }
+
+    public String toString(){
+        return this.nome + " | " + this.tipoDisciplina + " | Creditos:" + this.numeroDeCreditos;
+    }
     //#endregion
 }

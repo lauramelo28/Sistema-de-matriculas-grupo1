@@ -1,3 +1,4 @@
+import java.util.LinkedList;
 import java.util.List;
 
 public class Curso {
@@ -9,10 +10,10 @@ public class Curso {
     //#endregion
 
     //#region CONSTRUTORES
-    public Curso(String nome, int numeroDeCreditos, List<Disciplina> disciplinas) {
+    public Curso(String nome, int numeroDeCreditos) {
         this.nome = nome;
         this.numeroDeCreditos = numeroDeCreditos;
-        this.disciplinas = disciplinas;
+        this.disciplinas = new LinkedList<Disciplina>();
     }
     //#region MÉTODOS
     public String getNome() {
@@ -31,7 +32,7 @@ public class Curso {
     public String listarDisciplinas() {
         String disciplinasListada = "";
         for(Disciplina disciplina : disciplinas){
-            disciplinasListada += disciplina.getNome() + "\n" + disciplina.getTipoDisciplina() + "\n";
+            disciplinasListada += "Disciplina: " + disciplina.getNome() + " - Tipo: " + disciplina.getTipoDisciplina() + " - Semestre: " + disciplina.getSemestre() + "\n";
         }
         return disciplinasListada;
     }
@@ -74,6 +75,17 @@ public class Curso {
      */
     public void adicionarAluno(Aluno aluno){
         this.alunos.add(aluno);
+    }
+
+    public Disciplina buscarDisciplina(String nome){
+        return this.disciplinas.stream()
+                .filter(a -> a.getNome().equals(nome))
+                .findFirst()
+                .orElse(null);        
+    }
+
+    public String toString(){
+        return "[NOME | CREDITOS]\n" + "[ " + this.nome + " | " + this.numeroDeCreditos + " ]";
     }
     //#endregion
 }
