@@ -26,17 +26,13 @@ public class Secretaria extends Usuario {
         return null;
     }
 
-    public void cadastrarDisciplina(Disciplina disciplina){
-        Disciplina discplinaNova = new Disciplina(disciplina.getNome(), disciplina.getNumeroDeCreditos(), disciplina.getCurso(), disciplina.getSemestre(), disciplina.getTipoDisciplina());
-        for(Curso curso : cursos){
-            if(curso.getNome().equals(disciplina.getCurso().getNome())){
-                curso.adicionarDisciplinas(discplinaNova);
-            }
-        }
+    public void cadastrarDisciplina(Disciplina disciplina, Curso curso){
+        curso.adicionarDisciplinas(disciplina);
     }
 
-    public void cadastrarCurso(Curso curso){
-        cursos.add(curso);        
+    public Curso cadastrarCurso(String nome, int numeroDeCreditos){
+        Curso curso = new Curso(nome, 340);
+        return curso;
     }
 
     public Professor cadastrarProfessor(String nome, String cpf, String dataNascimento, String nomeUsuario, String senha, String matricula, String nomeCurso){
@@ -113,9 +109,7 @@ public class Secretaria extends Usuario {
             }
         }
     }
-
-    
-    @Override
+  
     public String toString(){
         return "Secretaria;" + this.nome + ";" + this.cpf + ";" + this.dataNascimento + ";" + this.login + ";" + this.senha;
     }

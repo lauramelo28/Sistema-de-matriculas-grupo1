@@ -13,14 +13,16 @@ public class Universidade {
     private String nome;
     private LinkedList<Usuario> usuarios;
     private LinkedList<Aluno> alunos;
+    private LinkedList<Professor> professores;
+    private LinkedList<Curso> cursos;
     private Usuario usuarioLogado;
-
-    private static final int MAX_DE_DISCIPLINAS = 4;
 
     public Universidade(String nome) {
         this.nome = nome;
         this.usuarios = new LinkedList<Usuario>();
         this.alunos = new LinkedList<Aluno>();
+        this.cursos = new LinkedList<Curso>();
+        this.professores = new LinkedList<Professor>();
     }
 
     public Usuario realizarLogin(String loginDigitado, String senhaDigitada) {
@@ -78,6 +80,7 @@ public class Universidade {
                     curso = dadosUsuario[6];
                     Professor professor = new Professor(nome, cpf, dataNascimento, login, senha, curso);
                     this.usuarios.add(professor);
+                    this.professores.add(professor);
                 case "Secretaria":
                     Secretaria secretaria = new Secretaria(nome, cpf, dataNascimento, login, senha);
                     this.usuarios.add(secretaria);
@@ -100,10 +103,12 @@ public class Universidade {
         Secretaria secretaria = (Secretaria) usuarioLogado;
         Professor professor = secretaria.cadastrarProfessor(nome, cpf, dataNascimento, nome, senha, senha, curso);
         this.usuarios.add(professor);
+        this.professores.add(professor);
         salvarDadosNoArquivo("usuarios", professor);
     }
 
-    public void adicionarSecretaria(String nome, String cpf, String dataNascimento, String login, String senha) throws IOException {
+    public void adicionarSecretaria(String nome, String cpf, String dataNascimento, String login, String senha)
+            throws IOException {
         Secretaria secretaria = new Secretaria(nome, cpf, dataNascimento, login, senha);
         this.usuarios.add(secretaria);
         salvarDadosNoArquivo("usuarios", secretaria);
@@ -139,5 +144,68 @@ public class Universidade {
         gravarDadoNoArquivo.write(saida.toString());
         arquivo.close();
     }
+
+    public Curso adicionarCurso(String nome, int numeroDeCreditos) {
+        Secretaria secretaria = (Secretaria) usuarioLogado;
+
+        Curso curso = secretaria.cadastrarCurso(nome, numeroDeCreditos);
+        cursos.add(curso);
+
+        return curso;
+    }
+
+    public void cadastrarDisciplina(List<Disciplina> disciplinas) {
+        Secretaria secretaria = (Secretaria) usuarioLogado;
+
+        for (Disciplina disciplina : disciplinas) {
+            secretaria.cadastrarDisciplina(disciplina, disciplina.getCurso());
+        }
+    }
+
+    public Curso buscarCurso(String nome) {
+        return this.cursos.stream()
+                .filter(a -> a.getNome().equals(nome))
+                .findFirst()
+                .orElse(null);
+    }
+
+    public String listarCursos() {
+        String listagemCursos = "";
+        for (Curso curso : cursos) {
+            listagemCursos += curso.toString() + "\n";
+        }
+        return listagemCursos;
+    }
+
+    public String listarDisciplinasCurso(Curso curso) {       
+        return curso.listarDisciplinas();
+    }
+
+    public void vincularProfessorDisciplina(String nomeProfessor, String nomeDisciplina) throws IllegalArgumentException{
+        Secretaria secretaria = (Secretaria) usuarioLogado;
+
+        Professor professor = buscarProfessor(nomeProfessor);
+        Disciplina disciplina = buscarDisciplina(nomeDisciplina);
+
+        if(professor == null || disciplina == null){
+            throw new IllegalArgumentException("Professor ou disciplina não encontrados.");
+        }else{
+            secretaria.atribuirDisciplinaProfessor(professor, disciplina);
+        }   
+    }
+
+    private Professor buscarProfessor(String nome){
+        return this.professores.stream()
+                .filter(a -> a.getNome().equals(nome))
+                .findFirst()
+                .orElse(null);        
+    }
+
+    private Disciplina buscarDisciplina(String nome){
+        Curso curso = buscarCurso(nome);
+        return curso.buscarDisciplina(nome);
+    }
+
+
 
 }

@@ -1,6 +1,8 @@
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Scanner;
 
 public class App {
@@ -55,20 +57,94 @@ public class App {
         System.out.println("| 3 - Area da secretaria                           |");
         System.out.println("| 0 - Sair                                         |");
         System.out.println("====================================================");
-        System.out.println("Observacao (apenas para teste do sistema): Dados para logar como secretaria no arquivo 'usuarios.csv' login: carlos.alberto e senha: 159@alberto");
+        System.out.println(
+                "Observacao (apenas para teste do sistema): Dados para logar como secretaria no arquivo 'usuarios.csv' login: carlos.alberto e senha: 159@alberto");
         System.out.print("\nDigite sua opção: ");
         int opcao = Integer.parseInt(teclado.nextLine());
 
         return opcao;
     }
 
+    private static int opcoesAluno() {
+        limparTela();
+        int opcao = -1;
+        do {
+            System.out.println("Menu App Aluno");
+            System.out.println("=================================================");
+            System.out.println("| 1 - Realizar matricula em discplina            |");
+            System.out.println("| 2 - Cancelar matricula em disciplina            |");
+            System.out.println("| 3 - Listar disciplinas do curso                |");
+            System.out.println("| 4 - Listar disciplinas matriculadas            |");
+            System.out.println("| 0 - Sair                                       |");
+            System.out.println("=================================================");
+
+            System.out.print("\nDigite sua opção: ");
+            try {
+                opcao = Integer.parseInt(teclado.nextLine());
+            } catch (NumberFormatException e) {
+                System.out.println("Opcao invalida.");
+            }
+        } while (!(opcao >= 0 && opcao <= 9));
+
+        return opcao;
+
+    }
+
     // Menu para o Aluno
     private static void menuAluno() {
-        System.out.println("Menu App Aluno");
-        System.out.println("=================================================");
-        System.out.println("1 - Realizar matricula em discplina");
-        System.out.println("2 - Cancelar matricula em discplina");
-        System.out.println("=================================================");
+        int opcao = opcoesAluno();
+        do {
+            switch (opcao) {
+                case 1:
+                    matricularDisciplina();
+                    break;
+                case 2:
+                    cadastrarUsuario("Professor");
+                    break;
+                case 3:
+                    listarDisciplinasCurso(alunoLogado.getNomeCurso());
+                    pausa();
+                    break;
+                case 4:
+                    listarDisciplinasMatriculadas();
+                    pausa();
+                    break;
+                default:
+                    break;
+            }
+            opcao = opcoesAluno();
+        } while (opcao != 0);
+        realizarLogoff();
+
+    }
+
+    private static int opcoesSecretaria() {
+        limparTela();
+        int opcao = -1;
+        do {
+            System.out.println("Menu App Secretaria");
+            System.out.println("=================================================");
+            System.out.println("| 1 - Cadastrar aluno                            |");
+            System.out.println("| 2 - Cadastrar professor                        |");
+            System.out.println("| 3 - Adicionar membro a secretaria              |");
+            System.out.println("| 4 - Cadastrar curso                            |");
+            System.out.println("| 5 - Adicionar disciplinas a curso              |");
+            System.out.println("| 6 - Listar cursos                              |");
+            System.out.println("| 7 - Listar disciplinas de um curso             |");
+            System.out.println("| 8 - Vincular professor a disciplina            |");
+            System.out.println("| 4 - Cancelar matricula em discplina");
+            System.out.println("| 0 - Sair");
+            System.out.println("=================================================");
+
+            System.out.print("\nDigite sua opção: ");
+            try {
+                opcao = Integer.parseInt(teclado.nextLine());
+            } catch (NumberFormatException e) {
+                System.out.println("Opcao invalida.");
+            }
+        } while (!(opcao >= 0 && opcao <= 9));
+
+        return opcao;
 
         System.out.print("\nDigite sua opção: ");
         int opcao = Integer.parseInt(teclado.nextLine());
@@ -84,34 +160,42 @@ public class App {
     }
 
     private static void menuSecretaria() {
-        limparTela();
-
-        System.out.println("Menu App Secretaria");
-        System.out.println("=================================================");
-        System.out.println("| 1 - Cadastrar aluno                           |");
-        System.out.println("| 2 - Cadastrar professor                       |");
-        System.out.println("| 3 - Adicionar membro a secretaria             |");
-        System.out.println("| 3 - Gerar currículo do semestre");
-        System.out.println("| 4 - Cancelar matricula em discplina");
-        System.out.println("=================================================");
-
-        System.out.print("\nDigite sua opção: ");
-        int opcao = Integer.parseInt(teclado.nextLine());
-
-        switch (opcao) {
-            case 1:
-                cadastrarUsuario("Aluno");
-                break;
-            case 2:
-                cadastrarUsuario("Professor");
-                break;
-            case 3:
-                cadastrarUsuario("Secretaria");
-                break;
-            default:
-                break;
-        }
-
+        int opcao = opcoesSecretaria();
+        do {
+            switch (opcao) {
+                case 1:
+                    cadastrarUsuario("Aluno");
+                    break;
+                case 2:
+                    cadastrarUsuario("Professor");
+                    break;
+                case 3:
+                    cadastrarUsuario("Secretaria");
+                    break;
+                case 4:
+                    cadastrarCurso();
+                    break;
+                case 5:
+                    vincularDisciplinasCurso();
+                    break;
+                case 6:
+                    listarCursos();
+                    pausa();
+                    break;
+                case 7:
+                    listarDisciplinasCurso(null);
+                    pausa();
+                    break;
+                case 8:
+                    vincularProfessorDisciplina();
+                    pausa();
+                    break;
+                default:
+                    break;
+            }
+            opcao = opcoesSecretaria();
+        } while (opcao != 0);
+        realizarLogoff();
     }
 
     private static void menuProfessor() {
@@ -151,6 +235,7 @@ public class App {
 
             if (alunoLogado == null) {
                 System.out.println("Login ou senha invalidos, tente logar novamente");
+                return false;
             }
 
             loginEfetuado = true;
@@ -178,6 +263,7 @@ public class App {
 
             if (professorLogado == null) {
                 System.out.println("Login ou senha invalidos, tente logar novamente");
+                return false;
             }
 
             loginEfetuado = true;
@@ -204,6 +290,7 @@ public class App {
 
             if (secretariaLogada == null) {
                 System.out.println("Login ou senha invalidos, tente logar novamente");
+                return false;
             }
 
             loginEfetuado = true;
@@ -240,12 +327,12 @@ public class App {
 
         System.out.print("Nome de Usuario: ");
         nomeUsuario = teclado.nextLine();
-        
+
         System.out.print("Senha: ");
         senha = teclado.nextLine();
 
-        switch(tipoCadastro){
-            case"Aluno":
+        switch (tipoCadastro) {
+            case "Aluno":
                 System.out.print("Nome do Curso: ");
                 nomeCurso = teclado.nextLine();
                 try {
@@ -268,10 +355,160 @@ public class App {
                     universidade.adicionarSecretaria(nome, cpf, dataNascimento, nomeUsuario, senha);
                 } catch (ClassCastException | IOException e) {
                     System.out.println("Erro ao cadastrar secretaria: " + e);
-                }            
+                }
                 break;
             default:
                 break;
         }
     }
+
+    // Metodo para cadastrar curso
+    private static void cadastrarCurso() {
+        String nome;
+        int numeroDeCreditos;
+        List<Disciplina> disciplinas = new LinkedList<Disciplina>();
+
+        System.out.println("===========================");
+        System.out.println("---- Cadastro de Curso ----");
+
+        System.out.print("Nome: ");
+        nome = teclado.nextLine();
+
+        System.out.print("Numero de Creditos: ");
+        numeroDeCreditos = Integer.parseInt(teclado.nextLine());
+
+        Curso curso = universidade.adicionarCurso(nome, numeroDeCreditos);
+
+        System.out.print("Deseja Adicionar Disciplinas ao Curso? (1- Sim | Outro digito para sair): ");
+        String opcao = teclado.nextLine();
+
+        if (opcao.equals("1")) {
+            disciplinas = cadastrarDisciplinas(curso);
+            universidade.cadastrarDisciplina(disciplinas);
+        }
+    }
+
+    // Metodo para cadastrar disciplinas
+    private static List<Disciplina> cadastrarDisciplinas(Curso curso) {
+        String nome, tipoDisciplina;
+        int numeroDeCreditos, semestre;
+        List<Disciplina> disciplinas = new LinkedList<Disciplina>();
+
+        System.out.println("================================");
+        System.out.println("---- Cadastro de Disciplina ----");
+
+        boolean adicionarDisciplinas = true;
+
+        do {
+            System.out.print("Nome: ");
+            nome = teclado.nextLine();
+
+            System.out.print("Numero de Creditos: ");
+            numeroDeCreditos = Integer.parseInt(teclado.nextLine());
+
+            System.out.print("Semestre: ");
+            semestre = Integer.parseInt(teclado.nextLine());
+
+            System.out.println("Tipos de Disciplina: ");
+            int contador = 0;
+            for (TipoDisciplina tipo : TipoDisciplina.values()) {
+                System.out.println("[" + ++contador + "] " + tipo.toString());
+            }
+
+            System.out.print("\nOpcao: ");
+            int opcaoDisciplina = Integer.parseInt(teclado.nextLine());
+
+            while (opcaoDisciplina != 1 && opcaoDisciplina != 2) {
+                System.out.print("Valor invalido, opcao: ");
+                opcaoDisciplina = Integer.parseInt(teclado.nextLine());
+            }
+
+            tipoDisciplina = TipoDisciplina.values()[opcaoDisciplina - 1].toString();
+
+            Disciplina disciplina = new Disciplina(nome, numeroDeCreditos, curso, semestre, tipoDisciplina);
+            disciplinas.add(disciplina);
+            System.out.print("1- Para adicionar mais disciplinas | Outro digito para sair: ");
+            String opcao = teclado.nextLine();
+            adicionarDisciplinas = opcao.equals("1") ? true : false;
+        } while (adicionarDisciplinas);
+
+        System.out.println("================================");
+        return disciplinas;
+    }
+
+    private static void vincularDisciplinasCurso() {
+        listarCursos();
+        System.out.print("Nome curso: ");
+        String nomeCurso = teclado.nextLine();
+
+        List<Disciplina> disciplinas = new LinkedList<Disciplina>();
+        Curso curso = universidade.buscarCurso(nomeCurso);
+        if (curso != null) {
+            disciplinas = cadastrarDisciplinas(curso);
+            universidade.cadastrarDisciplina(disciplinas);
+        } else {
+            System.out.println("Curso nao encontrado");
+        }
+    }
+
+    private static void listarCursos() {
+        System.out.println(universidade.listarCursos());
+    }
+
+    private static void listarDisciplinasCurso(String nomeCurso) {
+        listarCursos();
+        if(nomeCurso == null){
+            System.out.print("Nome do curso para exibir as disciplinas: ");
+            nomeCurso = teclado.nextLine();
+        }
+
+        Curso curso = universidade.buscarCurso(nomeCurso);
+        if (curso != null) {
+            System.out.println(universidade.listarDisciplinasCurso(curso));
+        } else {
+            System.out.println("Curso nao encontrado");
+        }
+    }
+
+    private static void vincularProfessorDisciplina() {
+        System.out.print("Nome professor: ");
+        String nomeProfessor = teclado.nextLine();
+
+        System.out.print("Nome da disciplina: ");
+        String nomeDisciplina = teclado.nextLine();
+
+        universidade.vincularProfessorDisciplina(nomeProfessor, nomeDisciplina);
+    }
+
+    private static void matricularDisciplina() {
+        String nomeCurso = alunoLogado.getNomeCurso();
+        Curso curso = universidade.buscarCurso(nomeCurso);
+
+        System.out.println("Disciplinas disponiveis: ");
+        listarDisciplinasCurso(nomeCurso);
+
+        System.out.print("Disciplina que deseja se matricular: ");
+        String nomeDisciplina = teclado.nextLine();
+
+        Disciplina disciplina = curso.buscarDisciplina(nomeDisciplina);
+
+        if (!disciplina.disciplinaDisponivel()) {
+            System.out.println("Disciplina nao disponivel para inscricoes");
+        } else {
+            try {
+                alunoLogado.matricularNaDisciplina(disciplina);
+                disciplina.adicionarAluno(alunoLogado);
+                System.out.println("Matricula efetuada");
+            } catch (IllegalArgumentException e) {
+                System.out.println(
+                        "Nao foi possivel se matricular na disciplina " + nomeDisciplina + "\n" + e.getMessage());
+            }
+        }
+
+    }
+
+    private static void listarDisciplinasMatriculadas(){
+        System.out.println(alunoLogado.toStringDisciplinasMatriculadas());
+    }
+
 }
