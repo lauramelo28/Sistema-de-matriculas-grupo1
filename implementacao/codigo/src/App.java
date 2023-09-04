@@ -188,11 +188,57 @@ public class App {
     }
 
     private static void menuProfessor() {
-        System.out.println("Menu App Professor");
-        System.out.println("=================================================");
+        int opcao = opcoesProfessor();
+        do {
+            switch (opcao) {
+                case 1:
+                    cadastrarUsuario("Professor");
+                    break;
+                case 2:
+                    verificarAlunosEmDisciplina();
+                    break;
+                case 3:
+                    listarDisciplinasProfessor();
+                    break;
+                default:
+                    break;
+            }
+            opcao = opcoesProfessor();
+        } while (opcao != 0);
+        realizarLogoff();
 
-        System.out.println("=================================================");
+    }
 
+
+    private static void verificarAlunosEmDisciplina() {
+        listarDisciplinasProfessor();
+        System.out.print("\nDigite o nome da disciplina: ");
+        String nome = teclado.nextLine();
+        Disciplina disciplina = professorLogado.getDisciplina(nome);
+        System.out.println("\n" + disciplina.listarAlunosMatriculados());
+    }
+
+    private static int opcoesProfessor() {
+        limparTela();
+        int opcao = -1;
+        do {
+            System.out.println("Menu App Professor");
+            System.out.println("=================================================");
+            System.out.println("| 1 - Cadastrar professor                        |");
+            System.out.println("| 2 - Listar alunos na disciplina                |");
+            System.out.println("| 3 - Listar disciplinas                         |");
+            System.out.println("| 0 - Sair");
+            System.out.println("=================================================");
+
+            System.out.print("\nDigite sua opção: ");
+            try {
+                opcao = Integer.parseInt(teclado.nextLine());
+            } catch (NumberFormatException e) {
+                System.out.println("Opcao invalida.");
+            }
+        } while (!(opcao >= 0 && opcao <= 9));
+
+        return opcao;
     }
 
     // metodo que limpa a tela no terminal
@@ -205,6 +251,16 @@ public class App {
     static void pausa() {
         System.out.println("Enter para continuar.");
         teclado.nextLine();
+    }
+
+
+    private static void listarDisciplinasProfessor() {
+        System.out.println("Disciplinas disponiveis: ");
+        try{
+            professorLogado.listarDisciplinas();
+        }catch(Exception e){
+            System.out.println("Professor não possui disciplinas");
+        }
     }
 
     // Metodo para realizar o login de um aluno

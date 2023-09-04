@@ -30,4 +30,19 @@ public class Professor extends Usuario {
         return "Professor;" + this.nome + ";" + this.cpf + ";" + this.dataNascimento + ";" + this.login + ";" + this.senha + ";" + this.curso;
     }
     //#endregion
+
+    public void listarDisciplinas() {
+        for(Disciplina disciplina : disciplinas){
+            System.out.println(disciplina.getNome());
+        }
+    }
+
+    public Disciplina getDisciplina(String nomeDisciplina) {
+        for(Disciplina disciplina : disciplinas){
+            if(disciplina.getNome() == nomeDisciplina){
+                return disciplina;
+            }
+        }
+        return null;
+    }
 }
