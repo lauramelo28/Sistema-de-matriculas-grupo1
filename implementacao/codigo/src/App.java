@@ -146,6 +146,17 @@ public class App {
 
         return opcao;
 
+        System.out.print("\nDigite sua opção: ");
+        int opcao = Integer.parseInt(teclado.nextLine());
+        switch(opcao){
+            case 1: 
+                System.out.println("Digite o nome da disciplina que deseja se matricular: ");
+                String nomeDisciplina = teclado.nextLine();
+                
+                secretariaLogada.matricularAlunoDisciplina(nomeDisciplina, alunoLogado);
+                break;
+        }
+
     }
 
     private static void menuSecretaria() {
