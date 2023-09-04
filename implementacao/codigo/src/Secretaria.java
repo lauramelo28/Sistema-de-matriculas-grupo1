@@ -6,7 +6,6 @@ public class Secretaria extends Usuario {
     private List<Aluno> alunos;
     private List<Professor> professores;
 
-
     public Secretaria (String nome, String cpf, String dataNascimento, String login, String senha) {
         super(nome, cpf, dataNascimento, login, senha);
     }
@@ -40,12 +39,14 @@ public class Secretaria extends Usuario {
         cursos.add(curso);        
     }
 
-    public void cadastrarProfessor(Professor professor){
-        professores.add(professor);
+    public Professor cadastrarProfessor(String nome, String cpf, String dataNascimento, String nomeUsuario, String senha, String matricula, String nomeCurso){
+        Professor professor = new Professor(nome, cpf, dataNascimento, login, senha, nomeCurso);
+        return professor;
     }
 
-    public void cadastrarAluno(Aluno aluno){
-        alunos.add(aluno);
+    public Aluno cadastrarAluno(String nome, String cpf, String dataNascimento, String nomeUsuario, String senha, String matricula, String nomeCurso){
+        Aluno aluno = new Aluno(nome, cpf, dataNascimento, nomeUsuario, senha, matricula, nomeCurso);
+        return aluno;
     }
 
     /**
@@ -98,6 +99,11 @@ public class Secretaria extends Usuario {
                 }
             }
         }
+    }
+
+    @Override
+    public String toString(){
+        return "Secretaria;" + this.nome + ";" + this.cpf + ";" + this.dataNascimento + ";" + this.login + ";" + this.senha;
     }
     
     //#endregion

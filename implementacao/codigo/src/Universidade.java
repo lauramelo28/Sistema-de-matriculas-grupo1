@@ -1,19 +1,26 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
 import java.util.Scanner;
 
 public class Universidade {
     // #region ATRIBUTOS
     private String nome;
     private LinkedList<Usuario> usuarios;
+    private LinkedList<Aluno> alunos;
     private Usuario usuarioLogado;
 
     private static final int MAX_DE_DISCIPLINAS = 4;
 
     public Universidade(String nome) {
         this.nome = nome;
+        this.usuarios = new LinkedList<Usuario>();
+        this.alunos = new LinkedList<Aluno>();
     }
 
     public Usuario realizarLogin(String loginDigitado, String senhaDigitada) {
@@ -49,8 +56,8 @@ public class Universidade {
         }
     }
 
-    public void processarUsuarios(LinkedList<String> listaUsuarios){
-        for(String usuario : listaUsuarios){
+    public void processarUsuarios(LinkedList<String> listaUsuarios) {
+        for (String usuario : listaUsuarios) {
             String[] dadosUsuario = usuario.split(";");
             String tipoUsuario = dadosUsuario[0];
             String nome = dadosUsuario[1];
@@ -59,43 +66,78 @@ public class Universidade {
             String login = dadosUsuario[4];
             String senha = dadosUsuario[5];
             String curso;
-            switch(tipoUsuario){
+            switch (tipoUsuario) {
                 case "Aluno":
                     String matricula = dadosUsuario[6];
                     curso = dadosUsuario[7];
-                    adicionarAluno(nome, cpf, dataNascimento, login, senha, matricula, curso);
+                    Aluno aluno = new Aluno(nome, cpf, dataNascimento, login, senha, matricula, curso);
+                    this.usuarios.add(aluno);
+                    this.alunos.add(aluno);
                     break;
                 case "Professor":
                     curso = dadosUsuario[6];
-                    adicionarProfessor(nome, cpf, dataNascimento, login, senha, curso);
+                    Professor professor = new Professor(nome, cpf, dataNascimento, login, senha, curso);
+                    this.usuarios.add(professor);
                 case "Secretaria":
-                    adicionarSecretaria(nome, cpf, dataNascimento, login, senha);
+                    Secretaria secretaria = new Secretaria(nome, cpf, dataNascimento, login, senha);
+                    this.usuarios.add(secretaria);
             }
         }
     }
 
-    private void adicionarAluno(String nome, String cpf, String dataNascimento, String login, String senha, String matricula, String curso){
-        if(usuarios == null){
-            usuarios = new LinkedList<Usuario>();
-        }
-
-        Aluno aluno = new Aluno(nome, cpf, dataNascimento, login, senha, matricula, curso);
+    public void adicionarAluno(String nome, String cpf, String dataNascimento, String login, String senha, String curso)
+            throws ClassCastException, IOException {
+        Secretaria secretaria = (Secretaria) usuarioLogado;
+        String matricula = gerarMatriculaUnica();
+        Aluno aluno = secretaria.cadastrarAluno(nome, cpf, dataNascimento, nome, senha, matricula, curso);
         this.usuarios.add(aluno);
+        this.alunos.add(aluno);
+        salvarDadosNoArquivo("usuarios", aluno);
     }
 
-    private void adicionarProfessor(String nome, String cpf, String dataNascimento, String login, String senha, String curso){
-        if(usuarios == null){
-            usuarios = new LinkedList<Usuario>();
-        }
-        Professor professor = new Professor(nome, cpf, dataNascimento, login, senha, curso);
+    public void adicionarProfessor(String nome, String cpf, String dataNascimento, String login, String senha,
+            String curso) throws IOException {
+        Secretaria secretaria = (Secretaria) usuarioLogado;
+        Professor professor = secretaria.cadastrarProfessor(nome, cpf, dataNascimento, nome, senha, senha, curso);
         this.usuarios.add(professor);
+        salvarDadosNoArquivo("usuarios", professor);
     }
 
-    public void adicionarSecretaria(String nome, String cpf, String dataNascimento, String login, String senha){
-        if(usuarios == null){
-            usuarios = new LinkedList<Usuario>();
-        }        
+    public void adicionarSecretaria(String nome, String cpf, String dataNascimento, String login, String senha) throws IOException {
         Secretaria secretaria = new Secretaria(nome, cpf, dataNascimento, login, senha);
         this.usuarios.add(secretaria);
+        salvarDadosNoArquivo("usuarios", secretaria);
     }
+
+    private String gerarMatriculaUnica() {
+        Random random = new Random();
+        String matricula = null;
+
+        do {
+            int numeroMatricula = random.nextInt(900000) + 100000;
+            matricula = Integer.toString(numeroMatricula);
+        } while (existeAlunoComMatricula(matricula));
+
+        return matricula;
+    }
+
+    private boolean existeAlunoComMatricula(String matricula) {
+        for (Aluno aluno : alunos) {
+            if (aluno.getMatricula().equals(matricula)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private static <T> void salvarDadosNoArquivo(String nomeArq, T item) throws IOException {
+        FileWriter arquivo = new FileWriter("./implementacao/codigo/src/utils/" + nomeArq + ".csv", true);
+        PrintWriter gravarDadoNoArquivo = new PrintWriter(arquivo);
+        StringBuilder saida = new StringBuilder();
+        saida.append("\n");
+        saida.append(item.toString());
+        gravarDadoNoArquivo.write(saida.toString());
+        arquivo.close();
+    }
+
 }

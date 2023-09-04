@@ -23,13 +23,19 @@ public class App {
             limparTela();
             switch (opcao) {
                 case 1:
-                    logarComoAluno();
+                    if (logarComoAluno()) {
+                        menuAluno();
+                    }
                     break;
                 case 2:
-                    logarComoProfessor();
+                    if (logarComoProfessor()) {
+                        menuProfessor();
+                    }
                     break;
                 case 3:
-                    logarComoSecretaria();
+                    if (logarComoSecretaria()) {
+                        menuSecretaria();
+                    }
                     break;
                 default:
                     break;
@@ -43,12 +49,13 @@ public class App {
     public static int menuUniversidade() {
         limparTela();
         System.out.println("Menu Sistema de Matriculas");
-        System.out.println("===================================================");
-        System.out.println("| 1 - Area do aluno                               |");
-        System.out.println("| 2 - Area do professor                           |");
+        System.out.println("====================================================");
+        System.out.println("| 1 - Area do aluno                                |");
+        System.out.println("| 2 - Area do professor                            |");
         System.out.println("| 3 - Area da secretaria                           |");
-        System.out.println("| 0 - Sair                                        |");
-        System.out.println("===================================================");
+        System.out.println("| 0 - Sair                                         |");
+        System.out.println("====================================================");
+        System.out.println("Observacao (apenas para teste do sistema): Dados para logar como secretaria no arquivo 'usuarios.csv' login: carlos.alberto e senha: 159@alberto");
         System.out.print("\nDigite sua opção: ");
         int opcao = Integer.parseInt(teclado.nextLine());
 
@@ -66,11 +73,33 @@ public class App {
     }
 
     private static void menuSecretaria() {
+        limparTela();
+
         System.out.println("Menu App Secretaria");
         System.out.println("=================================================");
-        System.out.println("1 - Gerar currículo do semestre");
-        System.out.println("2 - Cancelar matricula em discplina");
+        System.out.println("| 1 - Cadastrar aluno                           |");
+        System.out.println("| 2 - Cadastrar professor                       |");
+        System.out.println("| 3 - Adicionar membro a secretaria             |");
+        System.out.println("| 3 - Gerar currículo do semestre");
+        System.out.println("| 4 - Cancelar matricula em discplina");
         System.out.println("=================================================");
+
+        System.out.print("\nDigite sua opção: ");
+        int opcao = Integer.parseInt(teclado.nextLine());
+
+        switch (opcao) {
+            case 1:
+                cadastrarUsuario("Aluno");
+                break;
+            case 2:
+                cadastrarUsuario("Professor");
+                break;
+            case 3:
+                cadastrarUsuario("Secretaria");
+                break;
+            default:
+                break;
+        }
 
     }
 
@@ -94,22 +123,8 @@ public class App {
         teclado.nextLine();
     }
 
-    // Metodo para cadastrar um cliente na plataforma
-    public static void realizarCadastro() {
-        String nome, nomeUsuario, senha;
-        System.out.println("==========================");
-        System.out.println("--Cadastro de Cliente--");
-
-        System.out.println("Nome: ");
-        nome = teclado.nextLine();
-        System.out.println("login: ");
-        nomeUsuario = teclado.nextLine();
-        System.out.println("Senha: ");
-        senha = teclado.nextLine();
-    }
-
     // Metodo para realizar o login de um aluno
-    public static void logarComoAluno() {
+    public static boolean logarComoAluno() {
         System.out.println("============ALUNO============");
         System.out.println("------ Realize o login ------");
 
@@ -119,20 +134,24 @@ public class App {
         System.out.print("Digite sua senha: ");
         String senha = teclado.nextLine();
 
-        try{
-            alunoLogado = (Aluno)universidade.realizarLogin(login, senha);
-            
-            if(alunoLogado == null){
+        boolean loginEfetuado = false;
+        try {
+            alunoLogado = (Aluno) universidade.realizarLogin(login, senha);
+
+            if (alunoLogado == null) {
                 System.out.println("Login ou senha invalidos, tente logar novamente");
-            }            
-        }catch(ClassCastException e){
+            }
+
+            loginEfetuado = true;
+        } catch (ClassCastException e) {
             System.out.println("Erro ao fazer cadastro como aluno, tente novamente");
         }
 
-
+        return loginEfetuado;
     }
+
     // Metodo para realizar o login de um professor
-    public static void logarComoProfessor() {
+    public static boolean logarComoProfessor() {
         System.out.println("============PROFESSOR============");
         System.out.println("-------- Realize o login --------");
 
@@ -142,19 +161,23 @@ public class App {
         System.out.print("Digite sua senha: ");
         String senha = teclado.nextLine();
 
-        try{
-            professorLogado = (Professor)universidade.realizarLogin(login, senha);
+        boolean loginEfetuado = false;
+        try {
+            professorLogado = (Professor) universidade.realizarLogin(login, senha);
 
-            if(professorLogado == null){
+            if (professorLogado == null) {
                 System.out.println("Login ou senha invalidos, tente logar novamente");
             }
-        }catch(ClassCastException e){
+
+            loginEfetuado = true;
+        } catch (ClassCastException e) {
             System.out.println("Erro ao fazer cadastro como professor, tente novamente");
         }
+        return loginEfetuado;
     }
 
     // Metodo para realizar o login de um aluno
-    public static void logarComoSecretaria() {
+    public static boolean logarComoSecretaria() {
         System.out.println("============SECRETARIA============");
         System.out.println("-------- Realize o login ---------");
 
@@ -164,23 +187,80 @@ public class App {
         System.out.print("Digite sua senha: ");
         String senha = teclado.nextLine();
 
-        try{
-            secretariaLogada = (Secretaria)universidade.realizarLogin(login, senha);
-            
-            if(secretariaLogada == null){
+        boolean loginEfetuado = false;
+        try {
+            secretariaLogada = (Secretaria) universidade.realizarLogin(login, senha);
+
+            if (secretariaLogada == null) {
                 System.out.println("Login ou senha invalidos, tente logar novamente");
-            }            
-        }catch(ClassCastException e){
+            }
+
+            loginEfetuado = true;
+        } catch (ClassCastException e) {
             System.out.println("Erro ao fazer cadastro como secretaria, tente novamente");
         }
+        return loginEfetuado;
     }
 
     // Metodo para realizar o logoff de um cliente na plataforma
     public static void realizarLogoff() {
         // Usuario.realizarLogoff();
         System.out.println("==========================");
-        System.out.println("--Realizado logoff--");
+        System.out.println("---- Realizado logoff----");
+        universidade.realizarLogoff();
         pausa();
     }
 
+    // Metodo para cadastrar alunos e professores no sistema
+    public static void cadastrarUsuario(String tipoCadastro) {
+        String nome, cpf, dataNascimento, nomeUsuario, senha, nomeCurso;
+
+        System.out.println("===========================");
+        System.out.println("-------- Cadastro  --------");
+
+        System.out.print("Nome: ");
+        nome = teclado.nextLine();
+
+        System.out.print("CPF: ");
+        cpf = teclado.nextLine();
+
+        System.out.print("Data de Nascimento: ");
+        dataNascimento = teclado.nextLine();
+
+        System.out.print("Nome de Usuario: ");
+        nomeUsuario = teclado.nextLine();
+        
+        System.out.print("Senha: ");
+        senha = teclado.nextLine();
+
+        switch(tipoCadastro){
+            case"Aluno":
+                System.out.print("Nome do Curso: ");
+                nomeCurso = teclado.nextLine();
+                try {
+                    universidade.adicionarAluno(nome, cpf, dataNascimento, nomeUsuario, senha, nomeCurso);
+                } catch (ClassCastException | IOException e) {
+                    System.out.println("Erro ao cadastrar aluno: " + e);
+                }
+                break;
+            case "Professor":
+                System.out.print("Nome do Curso: ");
+                nomeCurso = teclado.nextLine();
+                try {
+                    universidade.adicionarProfessor(nome, cpf, dataNascimento, nomeUsuario, senha, nomeCurso);
+                } catch (ClassCastException | IOException e) {
+                    System.out.println("Erro ao cadastrar professor: " + e);
+                }
+                break;
+            case "Secretaria":
+                try {
+                    universidade.adicionarSecretaria(nome, cpf, dataNascimento, nomeUsuario, senha);
+                } catch (ClassCastException | IOException e) {
+                    System.out.println("Erro ao cadastrar secretaria: " + e);
+                }            
+                break;
+            default:
+                break;
+        }
+    }
 }

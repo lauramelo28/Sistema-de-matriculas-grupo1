@@ -57,6 +57,12 @@ public class Aluno extends Usuario {
         }
     }
 
+    @Override
+    public String toString(){
+        return "Aluno;" + this.nome + ";" + this.cpf + ";" + this.dataNascimento + ";" + this.login + ";" + this.senha + ";" + this.matricula + ";" + this.nomeCurso;
+    }
+
     //#endregion
 }
+
 

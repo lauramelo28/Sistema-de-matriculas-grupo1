@@ -25,5 +25,10 @@ public class Professor extends Usuario {
     public void novaDisciplina(Disciplina disciplina){
         disciplinas.add(disciplina);
     }
+
+    @Override
+    public String toString(){
+        return "Professor;" + this.nome + ";" + this.cpf + ";" + this.dataNascimento + ";" + this.login + ";" + this.senha + ";" + this.curso;
+    }
     //#endregion
 }
