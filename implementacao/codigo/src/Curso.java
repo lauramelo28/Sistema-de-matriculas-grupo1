@@ -41,6 +41,12 @@ public class Curso {
     public void adicionarDisciplinas(Disciplina disciplina){
         this.disciplinas.add(disciplina);
     }
+
+    public void getNumeroDeCreditos(){
+       for(Disciplina disciplina : disciplinas){
+           numeroDeCreditos += disciplina.getNumeroDeCreditos();
+       }
+    }
     public String gerarCurriculoSemestre(int semestre){
         String curriculo = "";
         for(Disciplina disciplina : disciplinas){
