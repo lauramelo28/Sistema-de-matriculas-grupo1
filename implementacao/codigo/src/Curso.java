@@ -21,7 +21,9 @@ public class Curso {
     public List<Disciplina> getDisciplinas() {
         return disciplinas;
     }
-
+    public int getNumeroDeCreditos() {
+        return numeroDeCreditos;
+    }
     /**
      * Método para listar as disciplinas do curso
      * @return String com as disciplinas do curso
@@ -42,9 +44,9 @@ public class Curso {
         this.disciplinas.add(disciplina);
     }
 
-    public void getNumeroDeCreditos(){
+    public void numeroDeCreditos(){
        for(Disciplina disciplina : disciplinas){
-           numeroDeCreditos += disciplina.getNumeroDeCreditos();
+           this.numeroDeCreditos += disciplina.getNumeroDeCreditos();
        }
     }
     public String gerarCurriculoSemestre(int semestre){
