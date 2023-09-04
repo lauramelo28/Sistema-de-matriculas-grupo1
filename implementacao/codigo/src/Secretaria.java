@@ -101,6 +101,20 @@ public class Secretaria extends Usuario {
         }
     }
 
+    public void matricularAlunoDisciplina(String nomeDisciplina, Aluno nomeAluno){
+        String nomeCurso = nomeAluno.getCurso();
+        for(Curso curso : cursos){
+            for(Disciplina disciplina : curso.getDisciplinas()){
+                if(disciplina.getNome().equals(nomeDisciplina) && disciplina.getCurso().getNome().equals(nomeCurso)){
+                    if(disciplina.adicionarAluno(nomeAluno)){
+                        nomeAluno.matricularNaDisciplina(disciplina);
+                    }
+                }
+            }
+        }
+    }
+
+    
     @Override
     public String toString(){
         return "Secretaria;" + this.nome + ";" + this.cpf + ";" + this.dataNascimento + ";" + this.login + ";" + this.senha;

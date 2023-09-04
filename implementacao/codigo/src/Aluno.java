@@ -23,6 +23,9 @@ public class Aluno extends Usuario {
     public String getMatricula(){
         return this.matricula;
     }
+    public String getCurso(){
+        return this.nomeCurso;
+    }
 
     //#region MÉTODOS
     public int gerenciarCreditos(){
@@ -36,7 +39,8 @@ public class Aluno extends Usuario {
     }
 
     public void matricularNaDisciplina(Disciplina disciplina){
-        if (verificarQtdDisciplinas()){
+        
+        if (verificarQtdDisciplinas() && verificarDisciplinasOptativas() && verificarDisciplinasObrigatorias()){
             this.disciplinasMatriculadas.add(disciplina);
         }
     }
@@ -55,6 +59,32 @@ public class Aluno extends Usuario {
         } else {
             return false;
         }
+    }
+
+    public boolean verificarDisciplinasOptativas(){
+        int optativas = 0;
+        for(Disciplina disciplina : disciplinasMatriculadas){
+            if(disciplina.getTipoDisciplina() == TipoDisciplina.Optativa){
+                optativas++;
+            }
+        }
+        if(optativas == 2){
+            return false;
+        }
+        return true;
+    }
+
+    public boolean verificarDisciplinasObrigatorias(){
+        int obrigatorias = 0;
+        for(Disciplina disciplina : disciplinasMatriculadas){
+            if(disciplina.getTipoDisciplina() == TipoDisciplina.Obrigatoria){
+                obrigatorias++;
+            }
+        }
+        if(obrigatorias == 2){
+            return false;
+        }
+        return true;
     }
 
     @Override
