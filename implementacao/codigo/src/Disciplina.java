@@ -90,8 +90,12 @@ public class Disciplina {
         }
     }
 
-    public String toString(){
+    public String formatDisciplinas(){
         return this.nome + " | " + this.tipoDisciplina + " | Creditos:" + this.numeroDeCreditos;
+    }
+
+    public String toString(){
+        return this.curso.getNome() + ";" + this.nome + ";" + this.numeroDeCreditos + ";" + this.semestre + ";" + this.tipoDisciplina;
     }
     //#endregion
 }

@@ -430,6 +430,13 @@ public class App {
         numeroDeCreditos = Integer.parseInt(teclado.nextLine());
 
         Curso curso = universidade.adicionarCurso(nome, numeroDeCreditos);
+        if(curso != null){
+            try {
+                Universidade.salvarDadosNoArquivo("cursos", curso);
+            } catch (IOException e) {
+                System.out.println("Erro ao salvar dado no arquivo" + e);
+            }
+        }
 
         System.out.print("Deseja Adicionar Disciplinas ao Curso? (1- Sim | Outro digito para sair): ");
         String opcao = teclado.nextLine();
@@ -479,6 +486,11 @@ public class App {
 
             Disciplina disciplina = new Disciplina(nome, numeroDeCreditos, curso, semestre, tipoDisciplina);
             disciplinas.add(disciplina);
+            try {
+                Universidade.salvarDadosNoArquivo("disciplinas", disciplina);
+            } catch (IOException e) {
+                System.out.println("Erro ao salvar dado no arquivo" + e);
+            }
             System.out.print("1- Para adicionar mais disciplinas | Outro digito para sair: ");
             String opcao = teclado.nextLine();
             adicionarDisciplinas = opcao.equals("1") ? true : false;
