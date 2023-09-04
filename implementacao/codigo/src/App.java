@@ -77,6 +77,7 @@ public class App {
             System.out.println("| 2 - Cancelar matricula em disciplina           |");
             System.out.println("| 3 - Listar disciplinas do curso                |");
             System.out.println("| 4 - Listar disciplinas matriculadas            |");
+            System.out.println("| 5 - Valor total do semestre                    |");
             System.out.println("| 0 - Sair                                       |");
             System.out.println("=================================================");
 
@@ -109,6 +110,10 @@ public class App {
                     break;
                 case 4:
                     listarDisciplinasMatriculadas();
+                    pausa();
+                    break;
+                case 5:
+                    System.out.println("Valor total do semestre: " + alunoLogado.cobranca());
                     pausa();
                     break;
                 default:
