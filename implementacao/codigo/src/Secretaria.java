@@ -31,7 +31,7 @@ public class Secretaria extends Usuario {
     }
 
     public Curso cadastrarCurso(String nome, int numeroDeCreditos){
-        Curso curso = new Curso(nome, 340);
+        Curso curso = new Curso(nome, numeroDeCreditos);
         return curso;
     }
 
