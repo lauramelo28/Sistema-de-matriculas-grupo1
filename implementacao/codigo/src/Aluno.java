@@ -47,7 +47,7 @@ public class Aluno extends Usuario {
 
     public void matricularNaDisciplina(Disciplina disciplina){
         
-        if (verificarQtdDisciplinas() && verificarDisciplinasOptativas() && verificarDisciplinasObrigatorias()){
+        if (verificarQtdDisciplinas()){
             this.disciplinasMatriculadas.add(disciplina);
         }
     }
@@ -69,7 +69,7 @@ public class Aluno extends Usuario {
         return this.disciplinasMatriculadas;
     }
 
-    private void verificarQtdDisciplinas() throws IllegalArgumentException{
+    private boolean verificarQtdDisciplinas() throws IllegalArgumentException{
         int qtdDisciplinasObrigatorias = 0;
         int qtdDisciplinasOptativas = 0;
 
@@ -85,33 +85,9 @@ public class Aluno extends Usuario {
         } else if (qtdDisciplinasOptativas == MAX_DE_DISCIPLINAS_OPTATIVAS) {
             throw new IllegalArgumentException("Voce nao pode ser matricular em mais de 2 disciplinas optativas");
         }
-    }
-
-    public boolean verificarDisciplinasOptativas(){
-        int optativas = 0;
-        for(Disciplina disciplina : disciplinasMatriculadas){
-            if(disciplina.getTipoDisciplina() == TipoDisciplina.Optativa){
-                optativas++;
-            }
-        }
-        if(optativas == 2){
-            return false;
-        }
         return true;
     }
 
-    public boolean verificarDisciplinasObrigatorias(){
-        int obrigatorias = 0;
-        for(Disciplina disciplina : disciplinasMatriculadas){
-            if(disciplina.getTipoDisciplina() == TipoDisciplina.Obrigatoria){
-                obrigatorias++;
-            }
-        }
-        if(obrigatorias == 2){
-            return false;
-        }
-        return true;
-    }
 
     public String toString(){
         return "Aluno;" + this.nome + ";" + this.cpf + ";" + this.dataNascimento + ";" + this.login + ";" + this.senha + ";" + this.matricula + ";" + this.nomeCurso;
