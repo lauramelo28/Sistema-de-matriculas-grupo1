@@ -14,10 +14,21 @@ public class Professor extends Usuario {
     //#endregion
 
     //#region MÉTODOS
-    public List<Aluno> verificarAlunosEmDisciplina(){
-        //Implementação do método
-        return null;
+    /**
+     * Método para listar os alunos em determinada disciplina do professor
+     * @param Disciplina disciplina
+     */
+    public void verificarAlunosEmDisciplina(Disciplina disciplina){
+        disciplina.listarAlunosMatriculados();
     }
 
+    public void novaDisciplina(Disciplina disciplina){
+        disciplinas.add(disciplina);
+    }
+
+    @Override
+    public String toString(){
+        return "Professor;" + this.nome + ";" + this.cpf + ";" + this.dataNascimento + ";" + this.login + ";" + this.senha + ";" + this.curso;
+    }
     //#endregion
 }
