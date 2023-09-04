@@ -177,35 +177,97 @@ public class Universidade {
         return listagemCursos;
     }
 
-    public String listarDisciplinasCurso(Curso curso) {       
+    public String listarDisciplinasCurso(Curso curso) {
         return curso.listarDisciplinas();
     }
 
-    public void vincularProfessorDisciplina(String nomeProfessor, String nomeDisciplina) throws IllegalArgumentException{
+    public void vincularProfessorDisciplina(String nomeProfessor, String nomeDisciplina)
+            throws IllegalArgumentException {
         Secretaria secretaria = (Secretaria) usuarioLogado;
 
         Professor professor = buscarProfessor(nomeProfessor);
         Disciplina disciplina = buscarDisciplina(nomeDisciplina);
 
-        if(professor == null || disciplina == null){
+        if (professor == null || disciplina == null) {
             throw new IllegalArgumentException("Professor ou disciplina não encontrados.");
-        }else{
+        } else {
             secretaria.atribuirDisciplinaProfessor(professor, disciplina);
-        }   
+        }
     }
 
-    private Professor buscarProfessor(String nome){
+    private Professor buscarProfessor(String nome) {
         return this.professores.stream()
                 .filter(a -> a.getNome().equals(nome))
                 .findFirst()
-                .orElse(null);        
+                .orElse(null);
     }
 
-    private Disciplina buscarDisciplina(String nome){
+    private Disciplina buscarDisciplina(String nome) {
         Curso curso = buscarCurso(nome);
         return curso.buscarDisciplina(nome);
     }
 
+    public void carregarCursos() throws FileNotFoundException {
+        try {
+            LinkedList<String> listaCursos = new LinkedList<>();
 
+            File arquivoUsuarios = new File("./implementacao/codigo/src/utils/cursos.csv");
+            Scanner entrada = new Scanner(arquivoUsuarios, "UTF-8");
+            String linha = entrada.nextLine();
+            while (entrada.hasNextLine()) {
+                listaCursos.add(linha);
+                linha = entrada.nextLine();
+            }
+            entrada.close();
+            processarCursos(listaCursos);
+        } catch (FileNotFoundException e) {
+            throw new FileNotFoundException("Arquivo de cursos nao encontrado");
+        }
+    }
 
+    private void processarCursos(LinkedList<String> listaCursos) {
+        for (String cursoLinha : listaCursos) {
+            String[] dadosCurso = cursoLinha.split(";");
+            String nomeCurso = dadosCurso[0];
+            int numeroDeCreditos = Integer.parseInt(dadosCurso[1]);
+            Curso curso = new Curso(nomeCurso, numeroDeCreditos);
+            this.cursos.add(curso);
+        }
+    }
+
+    public void carregarDisciplinas() throws FileNotFoundException {
+        try {
+            LinkedList<String> listaDisciplinas = new LinkedList<>();
+
+            File arquivoUsuarios = new File("./implementacao/codigo/src/utils/disciplinas.csv");
+            Scanner entrada = new Scanner(arquivoUsuarios, "UTF-8");
+            String linha = entrada.nextLine();
+            while (entrada.hasNextLine()) {
+                listaDisciplinas.add(linha);
+                linha = entrada.nextLine();
+            }
+            entrada.close();
+            processarDisciplinas(listaDisciplinas);
+        } catch (FileNotFoundException e) {
+            throw new FileNotFoundException("Arquivo de disciplinas nao encontrado");
+        }
+    }
+
+    private void processarDisciplinas(LinkedList<String> listaDisciplinas) {
+        for (String disciplinaLinha : listaDisciplinas) {
+            String[] dadosDisciplina = disciplinaLinha.split(";");
+            String nomeCurso = dadosDisciplina[0];
+            String nomeDisciplina = dadosDisciplina[1];
+            int numeroDeCreditos = Integer.parseInt(dadosDisciplina[2]);
+            int semestre = Integer.parseInt(dadosDisciplina[3]);
+            String tipoDisciplina = dadosDisciplina[4];
+            Curso curso = buscarCurso(nomeCurso);
+            if (curso != null) {
+                Disciplina disciplina = new Disciplina(nomeDisciplina, numeroDeCreditos, curso, semestre,
+                        tipoDisciplina);
+                curso.adicionarDisciplinas(disciplina);
+            }
+
+        }
+    }
 }

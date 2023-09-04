@@ -1,9 +1,9 @@
-Engenharia de Software;Programacao Modular
-Engenharia de Software;Laboratorio de Desenvolvimento de Software
-Engenharia de Software;Projeto de Software
-Engenharia de Software;AEDS I
-Engenharia de Software;AEDS II
-Medicina;Anatomia
-Medicina;Pediatria
-Medicina;Cardiologia
-Medicina;Parasitologia
+Engenharia de Software;Programacao Modular;23;2;Obrigatoria
+Engenharia de Software;Laboratorio de Desenvolvimento de Software;25;4;Obrigatoria
+Engenharia de Software;Projeto de Software;21;4;Obrigatoria
+Engenharia de Software;AEDS I;20;1;Opcional
+Engenharia de Software;AEDS II;20;2;Opcional
+Medicina;Anatomia;40;2;Obrigatoria
+Medicina;Pediatria;20;3;Opcional
+Medicina;Cardiologia;21;10;Opcional
+Medicina;Parasitologia;20;3;Obrigatoria

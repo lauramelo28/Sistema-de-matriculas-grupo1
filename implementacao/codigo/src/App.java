@@ -16,6 +16,8 @@ public class App {
         int opcao;
         try {
             universidade.carregarUsuarios();
+            universidade.carregarCursos();
+            universidade.carregarDisciplinas();
         } catch (FileNotFoundException e) {
             System.out.println(e);
         }
