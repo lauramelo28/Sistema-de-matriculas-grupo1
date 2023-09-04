@@ -135,7 +135,7 @@ public class Universidade {
         return false;
     }
 
-    private static <T> void salvarDadosNoArquivo(String nomeArq, T item) throws IOException {
+    public static <T> void salvarDadosNoArquivo(String nomeArq, T item) throws IOException {
         FileWriter arquivo = new FileWriter("./implementacao/codigo/src/utils/" + nomeArq + ".csv", true);
         PrintWriter gravarDadoNoArquivo = new PrintWriter(arquivo);
         StringBuilder saida = new StringBuilder();

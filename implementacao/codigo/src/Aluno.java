@@ -63,7 +63,7 @@ public class Aluno extends Usuario {
     public String toStringDisciplinasMatriculadas(){
         String disciplinasToString = "";
         for(Disciplina disciplina : disciplinasMatriculadas){
-            disciplinasToString += disciplina.toString() + "\n";
+            disciplinasToString += disciplina.formatDisciplinas() + "\n";
         }
 
         return disciplinasToString;

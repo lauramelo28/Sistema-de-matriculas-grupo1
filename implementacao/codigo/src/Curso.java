@@ -85,7 +85,7 @@ public class Curso {
     }
 
     public String toString(){
-        return "[NOME | CREDITOS]\n" + "[ " + this.nome + " | " + this.numeroDeCreditos + " ]";
+        return this.nome + ";" + this.numeroDeCreditos;
     }
     //#endregion
 }
