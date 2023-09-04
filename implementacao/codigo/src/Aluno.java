@@ -41,10 +41,6 @@ public class Aluno extends Usuario {
         
     }
 
-    public void matricularNoCurso(String nomeCurso){
-        //Implementação do método
-    }
-
     public void matricularNaDisciplina(Disciplina disciplina){
         
         if (verificarQtdDisciplinas()){

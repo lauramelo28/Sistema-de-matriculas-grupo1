@@ -72,7 +72,7 @@ public class App {
             System.out.println("Menu App Aluno");
             System.out.println("=================================================");
             System.out.println("| 1 - Realizar matricula em discplina            |");
-            System.out.println("| 2 - Cancelar matricula em disciplina            |");
+            System.out.println("| 2 - Cancelar matricula em disciplina           |");
             System.out.println("| 3 - Listar disciplinas do curso                |");
             System.out.println("| 4 - Listar disciplinas matriculadas            |");
             System.out.println("| 0 - Sair                                       |");
@@ -324,6 +324,11 @@ public class App {
             case "Aluno":
                 System.out.print("Nome do Curso: ");
                 nomeCurso = teclado.nextLine();
+                while (!existeCurso(nomeCurso)){
+                    System.out.print("Curso nao encontrado, digite novamente: ");
+                    nomeCurso = teclado.nextLine();
+                }
+
                 try {
                     universidade.adicionarAluno(nome, cpf, dataNascimento, nomeUsuario, senha, nomeCurso);
                 } catch (ClassCastException | IOException e) {
@@ -500,4 +505,14 @@ public class App {
         System.out.println(alunoLogado.toStringDisciplinasMatriculadas());
     }
 
+    private static boolean existeCurso(String cursoDigitado){
+        Curso curso = universidade.buscarCurso(cursoDigitado);
+
+        if (curso != null) {
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
 }
