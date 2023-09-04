@@ -41,6 +41,14 @@ public class Aluno extends Usuario {
         
     }
 
+    public double cobranca(){
+        int valorSemestre = 0;
+        for(Disciplina valorDisciplina: disciplinasMatriculadas){
+            valorSemestre = valorSemestre + valorDisciplina.getNumeroDeCreditos() * 100;
+        }
+        return valorSemestre;
+    }
+
     public void matricularNaDisciplina(Disciplina disciplina){
         
         if (verificarQtdDisciplinas()){
