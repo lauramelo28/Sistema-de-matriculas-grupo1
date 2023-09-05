@@ -199,12 +199,9 @@ public class App {
         do {
             switch (opcao) {
                 case 1:
-                    cadastrarUsuario("Professor");
-                    break;
-                case 2:
                     verificarAlunosEmDisciplina();
                     break;
-                case 3:
+                case 2:
                     listarDisciplinasProfessor();
                     break;
                 default:
@@ -231,9 +228,8 @@ public class App {
         do {
             System.out.println("Menu App Professor");
             System.out.println("=================================================");
-            System.out.println("| 1 - Cadastrar professor                        |");
-            System.out.println("| 2 - Listar alunos na disciplina                |");
-            System.out.println("| 3 - Listar disciplinas                         |");
+            System.out.println("| 1 - Listar alunos na disciplina                |");
+            System.out.println("| 2 - Listar disciplinas                         |");
             System.out.println("| 0 - Sair");
             System.out.println("=================================================");
 
@@ -567,7 +563,11 @@ public class App {
             System.out.println("Disciplina nao disponivel para inscricoes");
         } else {
             try {
-                alunoLogado.matricularNaDisciplina(disciplina);
+                try{
+                     alunoLogado.matricularNaDisciplina(disciplina);
+                }catch(NullPointerException e){
+                    System.out.println("Disciplina nao encontrada");
+                }
                 disciplina.adicionarAluno(alunoLogado);
                 System.out.println("Matricula efetuada");
             } catch (IllegalArgumentException e) {
