@@ -264,7 +264,9 @@ public class App {
     private static void listarDisciplinasProfessor() {
         System.out.println("Disciplinas disponiveis: ");
         try{
-            professorLogado.listarDisciplinas();
+            for(Disciplina disciplina : professorLogado.listarDisciplinas()){
+            System.out.println(disciplina.getNome());
+        }
         }catch(Exception e){
             System.out.println("Professor não possui disciplinas");
         }

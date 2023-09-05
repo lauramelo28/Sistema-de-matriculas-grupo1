@@ -31,10 +31,8 @@ public class Professor extends Usuario {
     }
     //#endregion
 
-    public void listarDisciplinas() {
-        for(Disciplina disciplina : disciplinas){
-            System.out.println(disciplina.getNome());
-        }
+    public List<Disciplina> listarDisciplinas() {
+        return this.disciplinas;
     }
 
     public Disciplina getDisciplina(String nomeDisciplina) {
